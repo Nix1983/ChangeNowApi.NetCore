@@ -10,7 +10,7 @@
         Finished,
         Failed,
         Refunded,
-        Veriying,
+        Verifying,
         UnKnown
     }
 }
