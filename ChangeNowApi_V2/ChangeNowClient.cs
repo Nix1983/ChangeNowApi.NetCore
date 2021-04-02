@@ -185,33 +185,69 @@ namespace ChangeNowApi_V2
             var request = new RestRequest(Method.POST);
             request.AddHeader(Enums.ApiEndPoints.ContentType, Enums.ApiEndPoints.ApplicationJson);
             request.AddHeader(Enums.ApiEndPoints.XChangeNowHeaderKey, ApiKey);
-            request.AddParameter(Enums.ApiEndPoints.ApplicationJson,
-                "{" +
-                $"\n    \"fromCurrency\": \"{requestObj.FromCurrency}\"," +
-                $"\n    \"toCurrency\": \"{requestObj.ToCurrency}\"," +
-                $"\n    \"fromNetwork\": \"{requestObj.FromNetwork}\"," +
-                $"\n    \"toNetwork\": \"{requestObj.ToNetwork}\"," +
-                $"\n    \"fromAmount\": \"{requestObj.FromAmount}\"," +
-                $"\n    \"toAmount\": \"{requestObj.ToAmount}\"," +
-                $"\n    \"address\": \"{requestObj.Address}\"," +
-                $"\n    \"extraId\": \"{requestObj.ExtraId}\"," +
-                $"\n    \"refundAddress\": \"{requestObj.RefundAddress}\"," +
-                $"\n    \"refundExtraId\": \"{requestObj.RefundExtraId}\"," +
-                $"\n    \"userId\": \"{requestObj.UserId}\"," +
-                $"\n    \"payload\": \"{requestObj.Payload}\"," +
-                $"\n    \"contactEmail\": \"{requestObj.ConactEmail}\"," +
-                $"\n    \"source\": \"\"," +
-                $"\n    \"flow\": \"{requestObj.Flow}\"," +
-                $"\n    \"type\": \"{requestObj.Type}\"," +
-                $"\n    \"rateId\": \"{requestObj.RateID}\"" +
-                $"\n" +
-                "}", ParameterType.RequestBody);
+
+            if (requestObj != null)
+            {
+                request.AddParameter(Enums.ApiEndPoints.ApplicationJson,
+                    "{" +
+                    $"\n    \"fromCurrency\": \"{requestObj.FromCurrency}\"," +
+                    $"\n    \"toCurrency\": \"{requestObj.ToCurrency}\"," +
+                    $"\n    \"fromNetwork\": \"{requestObj.FromNetwork}\"," +
+                    $"\n    \"toNetwork\": \"{requestObj.ToNetwork}\"," +
+                    $"\n    \"fromAmount\": \"{requestObj.FromAmount}\"," +
+                    $"\n    \"toAmount\": \"{requestObj.ToAmount}\"," +
+                    $"\n    \"address\": \"{requestObj.Address}\"," +
+                    $"\n    \"extraId\": \"{requestObj.ExtraId}\"," +
+                    $"\n    \"refundAddress\": \"{requestObj.RefundAddress}\"," +
+                    $"\n    \"refundExtraId\": \"{requestObj.RefundExtraId}\"," +
+                    $"\n    \"userId\": \"{requestObj.UserId}\"," +
+                    $"\n    \"payload\": \"{requestObj.Payload}\"," +
+                    $"\n    \"contactEmail\": \"{requestObj.ConactEmail}\"," +
+                    $"\n    \"source\": \"\"," +
+                    $"\n    \"flow\": \"{requestObj.Flow}\"," +
+                    $"\n    \"type\": \"{requestObj.Type}\"," +
+                    $"\n    \"rateId\": \"{requestObj.RateID}\"" +
+                    $"\n" +
+                    "}", ParameterType.RequestBody);
+            }
+            else
+            {
+                request.AddParameter(Enums.ApiEndPoints.ApplicationJson,
+                    "{" +
+                    $"\n    \"fromCurrency\": \"\"," +
+                    $"\n    \"toCurrency\": \"\"," +
+                    $"\n    \"fromNetwork\": \"\"," +
+                    $"\n    \"toNetwork\": \"\"," +
+                    $"\n    \"fromAmount\": \"\"," +
+                    $"\n    \"toAmount\": \"\"," +
+                    $"\n    \"address\": \"\"," +
+                    $"\n    \"extraId\": \"\"," +
+                    $"\n    \"refundAddress\": \"\"," +
+                    $"\n    \"refundExtraId\": \"\"," +
+                    $"\n    \"userId\": \"\"," +
+                    $"\n    \"payload\": \"\"," +
+                    $"\n    \"contactEmail\": \"\"," +
+                    $"\n    \"source\": \"\"," +
+                    $"\n    \"flow\": \"\"," +
+                    $"\n    \"type\": \"\"," +
+                    $"\n    \"rateId\": \"\"" +
+                    $"\n" +
+                    "}", ParameterType.RequestBody);
+            }
             return request;
         }
 
         private string GetTransactionStatusQueryString(string request)
         {
-            return $"{Enums.ApiEndPoints.Exchange}by-id?id={request}";
+            if (request != null)
+            {
+                return $"{Enums.ApiEndPoints.Exchange}by-id?id={request}";
+            }
+            else
+            {
+                return $"{Enums.ApiEndPoints.Exchange}by-id?id=";
+            }
+
         }
 
         private string GetAvailableCurrencyQueryString(CurrencyRequest request)
@@ -265,12 +301,28 @@ namespace ChangeNowApi_V2
 
         private string GetFioAddressesQueryString(FioAddressesRequest request)
         {
-            return $"{Enums.ApiEndPoints.Root}addresses-by-name?name={request.Name}";
+            if (request != null)
+            {
+                return $"{Enums.ApiEndPoints.Root}addresses-by-name?name={request.Name}";
+            }
+            else
+            {
+                return $"{Enums.ApiEndPoints.Root}addresses-by-name?name=";
+            }
         }
 
         private string GetMarketEstimatedQueryString(MarketEstimatedRequest request)
         {
-            return $"{Enums.ApiEndPoints.Markets}estimate?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromAmount={request.FromAmount}&toAmount&type={request.Type}";
+            if (request != null)
+            {
+                return $"{Enums.ApiEndPoints.Markets}estimate?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromAmount={request.FromAmount}&toAmount&type={request.Type}";
+
+            }
+            else
+            {
+
+                return $"{Enums.ApiEndPoints.Markets}estimate?fromCurrency=&toCurrency=&fromAmount=&toAmount&type=";
+            }
         }
 
         #endregion
