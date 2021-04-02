@@ -2,11 +2,33 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <PackageId>ChangeNowApi_V2_NIX</PackageId>
+    <Authors>Nix</Authors>
+    <Company>Nix</Company>
+    <PackageTags>bitcoin, ethereum, litecoin, coinbase, api, cryptocurrency, payment, money, merchant, checkout, cart, gateway, bank, swap</PackageTags>
+    <Description>A .NET implementation for the ChangeNow API for swapping coins. The ChangeNow API is a way to simple swap crypto coins fast and cheap</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Product>ChangeNow Api</Product>
+    <RepositoryUrl>https://github.com/Nix1983/ChangeNowApi.NetCore</RepositoryUrl>
+    <PackageIcon>ChangeNowLogoNugetLogo.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Logo\ChangeNowLogoNugetLogo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Logo\" />
   </ItemGroup>
 
 </Project>
