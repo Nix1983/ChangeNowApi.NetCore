@@ -57,7 +57,7 @@ namespace ChangeNowApi_V2.Dto
         /// Use "reverse" value to set amount for currencyTo and get amount of currencyFrom.
         /// [default = direct]
         /// </summary>
-        public string Type { get; set; }
+        public string Type { get; set; } = Enums.Direction.Direct;
 
         /// <summary>
         /// (Optional) Use rateId for fixed-rate flow. 
