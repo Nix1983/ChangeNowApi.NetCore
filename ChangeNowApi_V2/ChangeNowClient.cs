@@ -221,7 +221,14 @@ namespace ChangeNowApi_V2
 
         private string GetMinimalExchangeAmountQueryString(MinimalExchangeRequest request)
         {
-           return $"{Enums.ApiEndPoints.Exchange}min-amount?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromNetwork={request.FromNetwork}&toNetwork={request.ToNetwork}&flow={request.Flow}";
+            if(request != null)
+            {
+                return $"{Enums.ApiEndPoints.Exchange}min-amount?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromNetwork={request.FromNetwork}&toNetwork={request.ToNetwork}&flow={request.Flow}";
+            }
+            else
+            {
+                return $"{Enums.ApiEndPoints.Exchange}min-amount?fromCurrency=&toCurrency=&fromNetwork=&toNetwork=&flow=";
+            }
         }
 
         private string GetExchangeRangeQueryString(ExchangeRangeRequest request)
