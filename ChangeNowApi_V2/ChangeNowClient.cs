@@ -151,7 +151,7 @@ namespace ChangeNowApi_V2
 
         private string GetGetEstimatedExchangeAmountQueryString(EstimatedExchangeAmountRequest request)
         {
-            if(request != null)
+            if (request != null)
             {
                 return $"{Enums.ApiEndPoints.Exchange}estimated-amount?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromAmount={request.FromAmount}&toAmount={request.ToAmount}&fromNetwork={request.FromNetwork}&toNetwork={request.ToNetwork}&flow={request.Flow}&type={request.Type}&useRateId={request.UseRateId}";
             }
@@ -159,7 +159,7 @@ namespace ChangeNowApi_V2
             {
                 return $"{Enums.ApiEndPoints.Exchange}estimated-amount?fromCurrency=&toCurrency=&fromAmount=&toAmount=&fromNetwork=&toNetwork=&flow=&type=&useRateId=";
             }
-            
+
         }
 
         private async Task<IRestResponse> DoRequestAsync(string query)
@@ -229,7 +229,7 @@ namespace ChangeNowApi_V2
 
         private string GetMinimalExchangeAmountQueryString(MinimalExchangeRequest request)
         {
-            if(request != null)
+            if (request != null)
             {
                 return $"{Enums.ApiEndPoints.Exchange}min-amount?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromNetwork={request.FromNetwork}&toNetwork={request.ToNetwork}&flow={request.Flow}";
             }
@@ -241,7 +241,7 @@ namespace ChangeNowApi_V2
 
         private string GetExchangeRangeQueryString(ExchangeRangeRequest request)
         {
-            if(request != null)
+            if (request != null)
             {
                 return $"{Enums.ApiEndPoints.Exchange}range?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromNetwork={request.FromNetwork}&toNetwork={request.ToNetwork}&flow={request.Flow}";
             }
@@ -253,7 +253,14 @@ namespace ChangeNowApi_V2
 
         private string GetAddressValidationQueryString(AddressValidationRequest request)
         {
-            return $"{Enums.ApiEndPoints.Validation}address?currency={request.Curreny}&address={request.Adresse}";
+            if (request != null)
+            {
+                return $"{Enums.ApiEndPoints.Validation}address?currency={request.Curreny}&address={request.Adresse}";
+            }
+            else
+            {
+                return $"{Enums.ApiEndPoints.Validation}address?currency=&address=";
+            }
         }
 
         private string GetFioAddressesQueryString(FioAddressesRequest request)
