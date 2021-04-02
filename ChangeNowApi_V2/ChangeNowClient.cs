@@ -91,12 +91,22 @@ namespace ChangeNowApi_V2
 
         public TransactionStatusResponse GetTransactionStatus(TransactionStatusRequest request)
         {
+            if (request == null)
+            {
+                request = new TransactionStatusRequest();
+            }
+
             IRestResponse response = DoRequest(GetTransactionStatusQueryString(request.Id));
             return JsonConvert.DeserializeObject<TransactionStatusResponse>(response.Content);
         }
 
         public async Task<TransactionStatusResponse> GetTransactionStatusAsync(TransactionStatusRequest request)
         {
+            if(request == null)
+            {
+                request = new TransactionStatusRequest(); 
+            }
+
             IRestResponse response = await DoRequestAsync(GetTransactionStatusQueryString(request.Id));
             return JsonConvert.DeserializeObject<TransactionStatusResponse>(response.Content);
         }
