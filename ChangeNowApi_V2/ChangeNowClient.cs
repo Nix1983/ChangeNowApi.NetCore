@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using RestSharp;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace ChangeNowApi_V2
@@ -29,64 +30,61 @@ namespace ChangeNowApi_V2
         public async Task<List<CurrencyResponse>> GetListOfAvailableCurrenciesAsync(CurrencyRequest request)
         {
             IRestResponse response = await DoRequestAsync(GetAvailableCurrencyQueryString(request));
-            return JsonConvert.DeserializeObject<List<CurrencyResponse>>(response.Content);
+            return CurrencyResponseErrorHandle(response);
         }
 
         public List<CurrencyResponse> GetListOfAvailableCurrencies(CurrencyRequest request)
         {
-            return JsonConvert.DeserializeObject<List<CurrencyResponse>>(DoRequest(GetAvailableCurrencyQueryString(request)).Content);
+            return CurrencyResponseErrorHandle(DoRequest(GetAvailableCurrencyQueryString(request)));
         }
 
         public MinimalExchangeResponse GetMinimalExchangeAmount(MinimalExchangeRequest request)
         {
-            return JsonConvert.DeserializeObject<MinimalExchangeResponse>(DoRequest(GetMinimalExchangeAmountQueryString(request)).Content);
+            return MinimalExchangeResponseErrorHandle(DoRequest(GetMinimalExchangeAmountQueryString(request)));
         }
 
-        public async Task<MinimalExchangeResponse> GetMinimalExchangeAmountAsync(MinimalExchangeRequest info)
+        public async Task<MinimalExchangeResponse> GetMinimalExchangeAmountAsync(MinimalExchangeRequest request)
         {
-            var response = await DoRequestAsync(GetMinimalExchangeAmountQueryString(info));
-            return JsonConvert.DeserializeObject<MinimalExchangeResponse>(response.Content);
+            var response = await DoRequestAsync(GetMinimalExchangeAmountQueryString(request));
+            return MinimalExchangeResponseErrorHandle(response);
         }
 
         public ExchangeRangeResponse GetExchangeRange(ExchangeRangeRequest request)
         {
-            return JsonConvert.DeserializeObject<ExchangeRangeResponse>(DoRequest(GetExchangeRangeQueryString(request)).Content);
+            return ExchangeRangeResponseErrorHandle(DoRequest(GetExchangeRangeQueryString(request)));
         }
 
         public async Task<ExchangeRangeResponse> GetExchangeRangeAsync(ExchangeRangeRequest request)
         {
             var response = await DoRequestAsync(GetExchangeRangeQueryString(request));
-            return JsonConvert.DeserializeObject<ExchangeRangeResponse>(response.Content);
+            return ExchangeRangeResponseErrorHandle(response);
         }
 
-        public async Task<EstimatedExchangeAmountResponse> GetEstimatedExchangeAmountAsync(EstimatedExchangeAmountRequest info)
+        public async Task<EstimatedExchangeAmountResponse> GetEstimatedExchangeAmountAsync(EstimatedExchangeAmountRequest request)
         {
-            var response = await DoRequestAsync(GetGetEstimatedExchangeAmountQueryString(info));
-            return JsonConvert.DeserializeObject<EstimatedExchangeAmountResponse>(response.Content);
+            var response = await DoRequestAsync(GetGetEstimatedExchangeAmountQueryString(request));
+            return EstimatedExchangeAmountResponseErrorHandle(response);
         }
 
-        public EstimatedExchangeAmountResponse GetEstimatedExchangeAmount(EstimatedExchangeAmountRequest info)
+        public EstimatedExchangeAmountResponse GetEstimatedExchangeAmount(EstimatedExchangeAmountRequest request)
         {
-            var response = DoRequest(GetGetEstimatedExchangeAmountQueryString(info));
-            return JsonConvert.DeserializeObject<EstimatedExchangeAmountResponse>(response.Content);
+            return EstimatedExchangeAmountResponseErrorHandle(DoRequest(GetGetEstimatedExchangeAmountQueryString(request)));
         }
 
-        public async Task<TransactionResponse> CreateExchangeTransactionAsync(TransactionRequest requestObj)
-        {
-            var client = new RestClient(Enums.ApiEndPoints.Exchange);
-            client.Timeout = -1;
-            var request = GetCreateRequest(requestObj);
-            IRestResponse response = await client.ExecuteAsync(request);
-            return JsonConvert.DeserializeObject<TransactionResponse>(response.Content);
-        }
-
-        public TransactionResponse CreateExchangeTransaction(TransactionRequest requestObj)
+        public async Task<TransactionResponse> CreateExchangeTransactionAsync(TransactionRequest request)
         {
             var client = new RestClient(Enums.ApiEndPoints.Exchange);
             client.Timeout = -1;
-            var request = GetCreateRequest(requestObj);
-            IRestResponse response = client.Execute(request);
-            return JsonConvert.DeserializeObject<TransactionResponse>(response.Content);
+            IRestResponse response = await client.ExecuteAsync(GetCreateRequest(request));
+            return CreateExchangeErrorHandle(response);
+        }
+
+        public TransactionResponse CreateExchangeTransaction(TransactionRequest request)
+        {
+            var client = new RestClient(Enums.ApiEndPoints.Exchange);
+            client.Timeout = -1;
+            return CreateExchangeErrorHandle(client.Execute(GetCreateRequest(request)));
+       
         }
 
         public TransactionStatusResponse GetTransactionStatus(TransactionStatusRequest request)
@@ -96,8 +94,7 @@ namespace ChangeNowApi_V2
                 request = new TransactionStatusRequest();
             }
 
-            IRestResponse response = DoRequest(GetTransactionStatusQueryString(request.Id));
-            return JsonConvert.DeserializeObject<TransactionStatusResponse>(response.Content);
+            return TransactionStatusResponseErrorHandle(DoRequest(GetTransactionStatusQueryString(request.Id)));
         }
 
         public async Task<TransactionStatusResponse> GetTransactionStatusAsync(TransactionStatusRequest request)
@@ -108,51 +105,51 @@ namespace ChangeNowApi_V2
             }
 
             IRestResponse response = await DoRequestAsync(GetTransactionStatusQueryString(request.Id));
-            return JsonConvert.DeserializeObject<TransactionStatusResponse>(response.Content);
+            return TransactionStatusResponseErrorHandle(response);
         }
 
         public TransactionStatusResponse GetTransactionStatus(string request)
         {
-            return JsonConvert.DeserializeObject<TransactionStatusResponse>(DoRequest(GetTransactionStatusQueryString(request)).Content);
+            return TransactionStatusResponseErrorHandle(DoRequest(GetTransactionStatusQueryString(request)));
         }
 
         public async Task<TransactionStatusResponse> GetTransactionStatusAsync(string request)
         {
             IRestResponse response = await DoRequestAsync(GetTransactionStatusQueryString(request));
-            return JsonConvert.DeserializeObject<TransactionStatusResponse>(response.Content);
+            return TransactionStatusResponseErrorHandle(response);
         }
 
         public AddressValitationResponse ValidateAddress(AddressValidationRequest request)
         {
-            return JsonConvert.DeserializeObject<AddressValitationResponse>(DoRequest(GetAddressValidationQueryString(request)).Content);
+            return AddressValitationResponseErrorHandle(DoRequest(GetAddressValidationQueryString(request)));
         }
 
         public async Task<AddressValitationResponse> ValidateAddressAsync(AddressValidationRequest request)
         {
             IRestResponse response = await DoRequestAsync(GetAddressValidationQueryString(request));
-            return JsonConvert.DeserializeObject<AddressValitationResponse>(response.Content);
+            return AddressValitationResponseErrorHandle(response);
         }
 
         public FioAddressesResponse GetFioAddresses(FioAddressesRequest request)
         {
-            return JsonConvert.DeserializeObject<FioAddressesResponse>(DoRequest(GetFioAddressesQueryString(request)).Content);
+            return FioAddressesResponseErrorHandle(DoRequest(GetFioAddressesQueryString(request)));
         }
 
         public async Task<FioAddressesResponse> GetFioAddressesAsync(FioAddressesRequest request)
         {
             IRestResponse response = await DoRequestAsync(GetFioAddressesQueryString(request));
-            return JsonConvert.DeserializeObject<FioAddressesResponse>(response.Content);
+            return FioAddressesResponseErrorHandle(response);
         }
 
         public MarketEstimatedResponse GetMarketEstimatedInfos(MarketEstimatedRequest request)
         {
-            return JsonConvert.DeserializeObject<MarketEstimatedResponse>(DoRequest(GetMarketEstimatedQueryString(request)).Content);
+            return MarketEstimatedResponseErrorHandle(DoRequest(GetMarketEstimatedQueryString(request)));
         }
 
         public async Task<MarketEstimatedResponse> GetMarketEstimatedInfosAsync(MarketEstimatedRequest request)
         {
             IRestResponse response = await DoRequestAsync(GetMarketEstimatedQueryString(request));
-            return JsonConvert.DeserializeObject<MarketEstimatedResponse>(response.Content);
+            return MarketEstimatedResponseErrorHandle(response);
         }
 
         #endregion
@@ -332,6 +329,143 @@ namespace ChangeNowApi_V2
             {
 
                 return $"{Enums.ApiEndPoints.Markets}estimate?fromCurrency=&toCurrency=&fromAmount=&toAmount&type=";
+            }
+        }
+
+        private TransactionResponse CreateExchangeErrorHandle(IRestResponse response)
+        {
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return JsonConvert.DeserializeObject<TransactionResponse>(response.Content);
+            }
+            else
+            {
+                var result = new TransactionResponse();
+                result.StatusCode = response.StatusCode.ToString();
+                result.ErroeMessage = response.Content;
+                return result;
+            }
+        }
+
+        private List<CurrencyResponse> CurrencyResponseErrorHandle(IRestResponse response)
+        {
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return JsonConvert.DeserializeObject<List<CurrencyResponse>>(response.Content);
+            }
+            else
+            {
+                var list = new List<CurrencyResponse>();
+                var result = new CurrencyResponse();
+                result.StatusCode = response.StatusCode.ToString();
+                result.ErroeMessage = response.Content;
+                list.Add(result);
+                return list;
+            }
+        }
+
+        private MinimalExchangeResponse MinimalExchangeResponseErrorHandle(IRestResponse response)
+        {
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return JsonConvert.DeserializeObject<MinimalExchangeResponse>(response.Content);
+            }
+            else
+            {
+                var result = new MinimalExchangeResponse();
+                result.StatusCode = response.StatusCode.ToString();
+                result.ErroeMessage = response.Content;
+                return result;
+            }
+        }
+
+        private ExchangeRangeResponse ExchangeRangeResponseErrorHandle(IRestResponse response)
+        {
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return JsonConvert.DeserializeObject<ExchangeRangeResponse>(response.Content);
+            }
+            else
+            {
+                var result = new ExchangeRangeResponse();
+                result.StatusCode = response.StatusCode.ToString();
+                result.ErroeMessage = response.Content;
+                return result;
+            }
+        }
+
+        private EstimatedExchangeAmountResponse EstimatedExchangeAmountResponseErrorHandle(IRestResponse response)
+        {
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return JsonConvert.DeserializeObject<EstimatedExchangeAmountResponse>(response.Content);
+            }
+            else
+            {
+                var result = new EstimatedExchangeAmountResponse();
+                result.StatusCode = response.StatusCode.ToString();
+                result.ErroeMessage = response.Content;
+                return result;
+            }
+        }
+
+        private TransactionStatusResponse TransactionStatusResponseErrorHandle(IRestResponse response)
+        {
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return JsonConvert.DeserializeObject<TransactionStatusResponse>(response.Content);
+            }
+            else
+            {
+                var result = new TransactionStatusResponse();
+                result.StatusCode = response.StatusCode.ToString();
+                result.ErroeMessage = response.Content;
+                return result;
+            }
+        }
+
+        private AddressValitationResponse AddressValitationResponseErrorHandle(IRestResponse response)
+        {
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return JsonConvert.DeserializeObject<AddressValitationResponse>(response.Content);
+            }
+            else
+            {
+                var result = new AddressValitationResponse();
+                result.StatusCode = response.StatusCode.ToString();
+                result.ErroeMessage = response.Content;
+                return result;
+            }
+        }
+
+        private FioAddressesResponse FioAddressesResponseErrorHandle(IRestResponse response)
+        {
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return JsonConvert.DeserializeObject<FioAddressesResponse>(response.Content);
+            }
+            else
+            {
+                var result = new FioAddressesResponse();
+                result.StatusCode = response.StatusCode.ToString();
+                result.ErroeMessage = response.Content;
+                return result;
+            }
+        }
+
+        private MarketEstimatedResponse MarketEstimatedResponseErrorHandle(IRestResponse response)
+        {
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return JsonConvert.DeserializeObject<MarketEstimatedResponse>(response.Content);
+            }
+            else
+            {
+                var result = new MarketEstimatedResponse();
+                result.StatusCode = response.StatusCode.ToString();
+                result.ErroeMessage = response.Content;
+                return result;
             }
         }
 

@@ -13,9 +13,9 @@ namespace UnitTests
         ChangeNowClient client;
 
         /// <summary>
-        /// Note! You have to use your own ApiKey
+        /// Note! You have to use your own ApiKey. Without key some test will fail
         /// </summary>
-        private const string ApiKey = "your Key";
+        private const string ApiKey = "your API Key";
 
         /// <summary>
         /// You have to use a valid transactionID. 

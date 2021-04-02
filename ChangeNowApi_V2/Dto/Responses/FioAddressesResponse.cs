@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using ChangeNowApi_V2.Dto.BaseClasses;
+using Newtonsoft.Json;
 
 namespace ChangeNowApi_V2.Dto
 {
-    public class FioAddressesResponse
+    public class FioAddressesResponse : ResponseBase
     {
         /// <summary>
         /// Indicates if a request was processed successfully

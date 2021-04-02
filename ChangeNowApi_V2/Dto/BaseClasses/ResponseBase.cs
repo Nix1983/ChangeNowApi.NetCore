@@ -33,5 +33,17 @@ namespace ChangeNowApi_V2.Dto.BaseClasses
         /// </summary>
         [JsonProperty("flow")]
         public string Flow { get; set; }
+
+        /// <summary>
+        /// Response status code
+        /// </summary>
+        [JsonIgnore]
+        public string StatusCode { get; set; }
+
+        /// <summary>
+        /// Response error message
+        /// </summary>
+        [JsonIgnore]
+        public string ErroeMessage { get; set; }
     }
 }

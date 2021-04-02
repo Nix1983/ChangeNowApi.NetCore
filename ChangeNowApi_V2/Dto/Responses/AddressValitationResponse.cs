@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using ChangeNowApi_V2.Dto.BaseClasses;
+using Newtonsoft.Json;
 
 namespace ChangeNowApi_V2.Dto
 {
-    public class AddressValitationResponse
+    public class AddressValitationResponse : ResponseBase
     {
         /// <summary>
         /// The validity of an address
