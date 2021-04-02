@@ -233,7 +233,14 @@ namespace ChangeNowApi_V2
 
         private string GetExchangeRangeQueryString(ExchangeRangeRequest request)
         {
-            return $"{Enums.ApiEndPoints.Exchange}range?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromNetwork={request.FromNetwork}&toNetwork={request.ToNetwork}&flow={request.Flow}";
+            if(request != null)
+            {
+                return $"{Enums.ApiEndPoints.Exchange}range?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromNetwork={request.FromNetwork}&toNetwork={request.ToNetwork}&flow={request.Flow}";
+            }
+            else
+            {
+                return $"{Enums.ApiEndPoints.Exchange}range?fromCurrency=&toCurrency=&fromNetwork=&toNetwork=&flow=";
+            }
         }
 
         private string GetAddressValidationQueryString(AddressValidationRequest request)
