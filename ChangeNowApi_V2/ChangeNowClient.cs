@@ -139,7 +139,7 @@ namespace ChangeNowApi_V2
             return JsonConvert.DeserializeObject<MarketEstimatedResponse>(DoRequest(GetMarketEstimatedQueryString(request)).Content);
         }
 
-        public async Task<MarketEstimatedResponse> ValidateAddressAsync(MarketEstimatedRequest request)
+        public async Task<MarketEstimatedResponse> GetMarketEstimatedInfosAsync(MarketEstimatedRequest request)
         {
             IRestResponse response = await DoRequestAsync(GetMarketEstimatedQueryString(request));
             return JsonConvert.DeserializeObject<MarketEstimatedResponse>(response.Content);
