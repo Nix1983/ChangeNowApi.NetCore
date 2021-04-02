@@ -128,7 +128,7 @@ namespace ChangeNowApi_V2
             return JsonConvert.DeserializeObject<FioAddressesResponse>(DoRequest(GetFioAddressesQueryString(request)).Content);
         }
 
-        public async Task<FioAddressesResponse> ValidateAddressAsync(FioAddressesRequest request)
+        public async Task<FioAddressesResponse> GetFioAddressesAsync(FioAddressesRequest request)
         {
             IRestResponse response = await DoRequestAsync(GetFioAddressesQueryString(request));
             return JsonConvert.DeserializeObject<FioAddressesResponse>(response.Content);
