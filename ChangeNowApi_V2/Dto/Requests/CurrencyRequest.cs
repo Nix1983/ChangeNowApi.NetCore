@@ -5,16 +5,16 @@
         /// <summary>
         /// (Optional) Set true to return only active currencies
         /// </summary>
-        public string Active { get; set; }
+        public bool Active { get; set; }
 
         /// <summary>
         /// (Optional) If this field is true, only currencies available for buy are returned.
         /// </summary>
-        public string Buy { get; set; }
+        public bool Buy { get; set; }
 
         /// <summary>
         /// (Optional) If this field is true, only currencies available for sell are returned.
         /// </summary>
-        public string Sell { get; set; }
+        public bool Sell { get; set; }
     }
 }
