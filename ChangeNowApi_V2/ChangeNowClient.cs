@@ -149,9 +149,17 @@ namespace ChangeNowApi_V2
 
         #region //---- private functions----
 
-        private string GetGetEstimatedExchangeAmountQueryString(EstimatedExchangeAmountRequest info)
+        private string GetGetEstimatedExchangeAmountQueryString(EstimatedExchangeAmountRequest request)
         {
-            return $"{Enums.ApiEndPoints.Exchange}estimated-amount?fromCurrency={info.FromCurrency}&toCurrency={info.ToCurrency}&fromAmount={info.FromAmount}&toAmount={info.ToAmount}&fromNetwork={info.FromNetwork}&toNetwork={info.ToNetwork}&flow={info.Flow}&type={info.Type}&useRateId={info.UserRateId}";
+            if(request != null)
+            {
+                return $"{Enums.ApiEndPoints.Exchange}estimated-amount?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromAmount={request.FromAmount}&toAmount={request.ToAmount}&fromNetwork={request.FromNetwork}&toNetwork={request.ToNetwork}&flow={request.Flow}&type={request.Type}&useRateId={request.UseRateId}";
+            }
+            else
+            {
+                return $"{Enums.ApiEndPoints.Exchange}estimated-amount?fromCurrency=&toCurrency=&fromAmount=&toAmount=&fromNetwork=&toNetwork=&flow=&type=&useRateId=";
+            }
+            
         }
 
         private async Task<IRestResponse> DoRequestAsync(string query)

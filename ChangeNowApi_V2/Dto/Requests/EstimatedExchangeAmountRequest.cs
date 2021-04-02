@@ -22,6 +22,6 @@
         /// If this field is true, you could use returned field "rateId" in next method for creating transaction
         /// to freeze estimated amount that you got in this method.Current estimated amount would be valid until time in field "validUntil"
         /// </summary>
-        public string UserRateId { get; set; }
+        public bool UseRateId { get; set; }
     }
 }
