@@ -73,7 +73,7 @@ namespace ChangeNowApi_V2
 
         public async Task<TransactionResponse> CreateExchangeTransactionAsync(TransactionRequest requestObj)
         {
-            var client = new RestClient(Enums.ApiEndPoints.Root);
+            var client = new RestClient(Enums.ApiEndPoints.Exchange);
             client.Timeout = -1;
             var request = GetCreateRequest(requestObj);
             IRestResponse response = await client.ExecuteAsync(request);
@@ -82,7 +82,7 @@ namespace ChangeNowApi_V2
 
         public TransactionResponse CreateExchangeTransaction(TransactionRequest requestObj)
         {
-            var client = new RestClient(Enums.ApiEndPoints.Root);
+            var client = new RestClient(Enums.ApiEndPoints.Exchange);
             client.Timeout = -1;
             var request = GetCreateRequest(requestObj);
             IRestResponse response = client.Execute(request);
