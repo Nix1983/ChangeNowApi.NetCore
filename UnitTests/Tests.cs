@@ -15,7 +15,12 @@ namespace UnitTests
         /// <summary>
         /// Note! You have to use your own ApiKey
         /// </summary>
-        private const string ApiKey = "96281cfe083eba5afec4afecf7859a1198e572a4f26f54f66a502085278de148";
+        private const string ApiKey = "your Key";
+
+        /// <summary>
+        /// You have to use a valid transactionID. 
+        /// This could have expired and the TransactionStatus tests will fail
+        /// </summary>
         private static string TransactionID = "eba706364c7e6c";
 
         [OneTimeSetUp]
