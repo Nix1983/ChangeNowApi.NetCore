@@ -5,7 +5,7 @@
 ## Installation
 Use the nuget package manager to install
 ```bash
-Install-Package ChangeNowApi_V2_NIX -Version 1.0.0
+Install-Package ChangeNowApi_V2 -Version 1.0.0
 ```
 
 ## Usage
