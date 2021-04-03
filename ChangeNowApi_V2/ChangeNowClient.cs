@@ -298,7 +298,7 @@ namespace ChangeNowApi_V2
         {
             if (request != null)
             {
-                return $"{Enums.ApiEndPoints.Validation}address?currency={request.Curreny}&address={request.Adresse}";
+                return $"{Enums.ApiEndPoints.Validation}address?currency={request.Curreny}&address={request.Adress}";
             }
             else
             {

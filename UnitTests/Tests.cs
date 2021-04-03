@@ -476,7 +476,7 @@ namespace UnitTests
                 request = new AddressValidationRequest()
                 {
                     Curreny = currency,
-                    Adresse = address
+                    Adress = address
                 };
             }
 
@@ -518,7 +518,7 @@ namespace UnitTests
                 request = new AddressValidationRequest()
                 {
                     Curreny = currency,
-                    Adresse = address
+                    Adress = address
                 };
             }
 

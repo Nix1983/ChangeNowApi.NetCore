@@ -10,7 +10,7 @@
         /// <summary>
         /// (Required) Address for validation
         /// </summary>
-        public string Adresse { get; set; }
+        public string Adress { get; set; }
 
     }
 }
