@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <PackageId>ChangeNowApi_V2_NIX</PackageId>
+    <PackageId>ChangeNowApi_V2</PackageId>
     <Authors>Nix</Authors>
     <Company>Nix</Company>
     <PackageTags>bitcoin, ethereum, litecoin, coinbase, api, cryptocurrency, payment, money, merchant, checkout, cart, gateway, bank, swap</PackageTags>
@@ -13,6 +13,7 @@
     <Product>ChangeNow Api</Product>
     <RepositoryUrl>https://github.com/Nix1983/ChangeNowApi.NetCore</RepositoryUrl>
     <PackageIcon>ChangeNowLogoNugetLogo.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/Nix1983/ChangeNowApi.NetCore</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
