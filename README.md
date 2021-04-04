@@ -17,7 +17,7 @@ To see how this library is used, I recommend the Unittest Project. Every functio
 
 ```c#
 //get a client
-var client = new ChangeNowClient("YOUR API KEY");
+var client = ChangeNowClient.GetClient("YOUR API KEY");
 
 //get available currencies
 var request = new CurrencyRequest() { Active = true};
