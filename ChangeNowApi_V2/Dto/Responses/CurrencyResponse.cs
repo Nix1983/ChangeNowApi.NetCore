@@ -18,7 +18,7 @@ namespace ChangeNowApi_V2.Dto
         public string Name { get; set; }
 
         /// <summary>
-        /// Currency logo url
+        /// Currency logo URL
         /// </summary>
         [JsonProperty("image")]
         public string ImageLink { get; set; }

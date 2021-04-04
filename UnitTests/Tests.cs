@@ -10,23 +10,23 @@ namespace UnitTests
 {
     public class Tests
     {
-        ChangeNowClient client;
+        private ChangeNowClient _client;
 
         /// <summary>
         /// Note! You have to use your own ApiKey. Without key some test will fail
         /// </summary>
-        private const string ApiKey = "your API Key";
+        private const string _apiKey = "your API Key";
 
         /// <summary>
         /// You have to use a valid transactionID. 
         /// This could have expired and the TransactionStatus tests will fail
         /// </summary>
-        private static string TransactionID = "eba706364c7e6c";
+        private static string _transactionID = "eba706364c7e6c";
 
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
-            client = new ChangeNowClient(ApiKey);
+            _client = ChangeNowClient.GetClient(_apiKey);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace UnitTests
             }
 
 
-            var result = await client.GetListOfAvailableCurrenciesAsync(request);
+            var result = await _client.GetListOfAvailableCurrenciesAsync(request);
             Assert.NotNull(result);
             Assert.True(result.Count > 0);
 
@@ -88,7 +88,7 @@ namespace UnitTests
             }
 
 
-            var result = client.GetListOfAvailableCurrencies(request);
+            var result = _client.GetListOfAvailableCurrencies(request);
             Assert.NotNull(result);
             Assert.True(result.Count > 0);
 
@@ -118,7 +118,7 @@ namespace UnitTests
             }
 
 
-            var result = await client.GetMinimalExchangeAmountAsync(request);
+            var result = await _client.GetMinimalExchangeAmountAsync(request);
             Assert.NotNull(result);
 
             if (objIsNull)
@@ -166,7 +166,7 @@ namespace UnitTests
             }
 
 
-            var result = client.GetMinimalExchangeAmount(request);
+            var result = _client.GetMinimalExchangeAmount(request);
             Assert.NotNull(result);
 
             if (objIsNull)
@@ -214,7 +214,7 @@ namespace UnitTests
             }
 
 
-            var result = await client.GetExchangeRangeAsync(request);
+            var result = await _client.GetExchangeRangeAsync(request);
             Assert.NotNull(result);
 
             if (objIsNull)
@@ -263,7 +263,7 @@ namespace UnitTests
             }
 
 
-            var result = client.GetExchangeRange(request);
+            var result = _client.GetExchangeRange(request);
             Assert.NotNull(result);
 
             if (objIsNull)
@@ -318,7 +318,7 @@ namespace UnitTests
             }
 
 
-            var result = await client.GetEstimatedExchangeAmountAsync(request);
+            var result = await _client.GetEstimatedExchangeAmountAsync(request);
             Assert.NotNull(result);
 
             if (objIsNull)
@@ -402,7 +402,7 @@ namespace UnitTests
             }
 
 
-            var result = client.GetEstimatedExchangeAmount(request);
+            var result = _client.GetEstimatedExchangeAmount(request);
             Assert.NotNull(result);
 
             if (objIsNull)
@@ -456,7 +456,6 @@ namespace UnitTests
         }
 
         [Test]
-        [TestCase(true, null, null, true)]
         [TestCase(false, "doge", "D6CkMBAGs7pB3DJ2Q5qYTYUwvg8MpTCazX", true)]
         [TestCase(false, "doge", "D6CkMBAGs7pB3DJ2Q5qYTYUwvg8MpTCaz", false)]
         [TestCase(false, "dash", "XuvkS6AsfZ59LVUbEe4WDm26XFSPobvYwe", true)]
@@ -481,7 +480,7 @@ namespace UnitTests
             }
 
 
-            var result = await client.ValidateAddressAsync(request);
+            var result = await _client.ValidateAddressAsync(request);
             Assert.NotNull(result);
 
             if (objIsNull)
@@ -498,7 +497,6 @@ namespace UnitTests
         }
 
         [Test]
-        [TestCase(true, null, null, true)]
         [TestCase(false, "doge", "D6CkMBAGs7pB3DJ2Q5qYTYUwvg8MpTCazX", true)]
         [TestCase(false, "doge", "D6CkMBAGs7pB3DJ2Q5qYTYUwvg8MpTCaz", false)]
         [TestCase(false, "dash", "XuvkS6AsfZ59LVUbEe4WDm26XFSPobvYwe", true)]
@@ -523,7 +521,7 @@ namespace UnitTests
             }
 
 
-            var result = client.ValidateAddress(request);
+            var result = _client.ValidateAddress(request);
             Assert.NotNull(result);
 
             if (objIsNull)
@@ -559,7 +557,7 @@ namespace UnitTests
             }
 
 
-            var result = await client.GetFioAddressesAsync(request);
+            var result = await _client.GetFioAddressesAsync(request);
             Assert.NotNull(result);
             Assert.False(result.Success);
 
@@ -585,7 +583,7 @@ namespace UnitTests
             }
 
 
-            var result = client.GetFioAddresses(request);
+            var result = _client.GetFioAddresses(request);
             Assert.NotNull(result);
             Assert.False(result.Success);
 
@@ -615,7 +613,7 @@ namespace UnitTests
                 };
             }
 
-            var result = await client.GetMarketEstimatedInfosAsync(request);
+            var result = await _client.GetMarketEstimatedInfosAsync(request);
             Assert.NotNull(result);
 
         }
@@ -644,7 +642,7 @@ namespace UnitTests
                 };
             }
 
-            var result = client.GetMarketEstimatedInfos(request);
+            var result = _client.GetMarketEstimatedInfos(request);
             Assert.NotNull(result);
 
         }
@@ -673,7 +671,7 @@ namespace UnitTests
                 };
             }
 
-            var result = await client.CreateExchangeTransactionAsync(request);
+            var result = await _client.CreateExchangeTransactionAsync(request);
             Assert.NotNull(result);
 
             if (objIsNull)
@@ -714,7 +712,7 @@ namespace UnitTests
             //Save id for the next test
             if (!string.IsNullOrEmpty(result.Id))
             {
-                TransactionID = result.Id;
+                _transactionID = result.Id;
             }
 
         }
@@ -743,7 +741,7 @@ namespace UnitTests
                 };
             }
 
-            var result = client.CreateExchangeTransaction(request);
+            var result = _client.CreateExchangeTransaction(request);
             Assert.NotNull(result);
 
             if (objIsNull)
@@ -788,7 +786,7 @@ namespace UnitTests
         [TestCase(false, false)]
         public async Task GetTransactionStatusAsyncTest(bool objIsNull, bool function)
         {
-            TransactionStatusRequest request = new TransactionStatusRequest() { Id = TransactionID };
+            TransactionStatusRequest request = new TransactionStatusRequest() { Id = _transactionID };
 
             TransactionStatusResponse result;
             if (function)
@@ -797,12 +795,12 @@ namespace UnitTests
                 {
                     request = null;
                 }
-                result = await client.GetTransactionStatusAsync(request);
+                result = await _client.GetTransactionStatusAsync(request);
             }
             else
             {
 
-                result = await client.GetTransactionStatusAsync(TransactionID);
+                result = await _client.GetTransactionStatusAsync(_transactionID);
 
             }
 
@@ -845,7 +843,7 @@ namespace UnitTests
         [TestCase(false, false)]
         public void GetTransactionStatusTest(bool objIsNull, bool function)
         {
-            TransactionStatusRequest request = new TransactionStatusRequest() { Id = TransactionID };
+            TransactionStatusRequest request = new TransactionStatusRequest() { Id = _transactionID };
 
             TransactionStatusResponse result;
             if (function)
@@ -854,12 +852,12 @@ namespace UnitTests
                 {
                     request = null;
                 }
-                result = client.GetTransactionStatus(request);
+                result = _client.GetTransactionStatus(request);
             }
             else
             {
 
-                result = client.GetTransactionStatus(TransactionID);
+                result = _client.GetTransactionStatus(_transactionID);
 
             }
 
@@ -906,7 +904,7 @@ namespace UnitTests
         [TestCase("failed", TransactionStatus.Failed)]
         [TestCase("Verifying", TransactionStatus.Verifying)]
         [TestCase("refunded", TransactionStatus.Refunded)]
-        [TestCase("asdasd",TransactionStatus.UnKnown)]
+        [TestCase("ThisEnumNotExist",TransactionStatus.UnKnown)]
         [TestCase(null, TransactionStatus.UnKnown)]
         public void ChangeNowConverterStringToEnumTests(string value, TransactionStatus expected)
         {

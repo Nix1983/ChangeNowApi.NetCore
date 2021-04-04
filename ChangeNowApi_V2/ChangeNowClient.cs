@@ -11,16 +11,32 @@ namespace ChangeNowApi_V2
     {
         #region //---- member ----
 
-        private static string ApiKey { get; set; }
+        private static string _apiKey;
+
+        private static ChangeNowClient _client;
 
         #endregion
 
         #region //---- Construction ----
 
-        public ChangeNowClient(string apiKey)
+        private ChangeNowClient(string apiKey)
         {
-            ApiKey = apiKey;
+            _apiKey = apiKey;
 
+        }
+
+        /// <summary>
+        /// Get a ChangeNowClient instance
+        /// [Singleton]
+        /// </summary>
+        /// <param name="apiKey"></param>
+        /// <returns></returns>
+        public static ChangeNowClient GetClient(string apiKey)
+        {
+            if (_client == null) _client = new ChangeNowClient(apiKey);
+            else { _apiKey = apiKey; }
+
+            return _client;
         }
 
         #endregion
@@ -84,7 +100,7 @@ namespace ChangeNowApi_V2
             var client = new RestClient(Enums.ApiEndPoints.Exchange);
             client.Timeout = -1;
             return CreateExchangeErrorHandle(client.Execute(GetCreateRequest(request)));
-       
+
         }
 
         public TransactionStatusResponse GetTransactionStatus(TransactionStatusRequest request)
@@ -99,9 +115,9 @@ namespace ChangeNowApi_V2
 
         public async Task<TransactionStatusResponse> GetTransactionStatusAsync(TransactionStatusRequest request)
         {
-            if(request == null)
+            if (request == null)
             {
-                request = new TransactionStatusRequest(); 
+                request = new TransactionStatusRequest();
             }
 
             IRestResponse response = await DoRequestAsync(GetTransactionStatusQueryString(request.Id));
@@ -171,27 +187,28 @@ namespace ChangeNowApi_V2
 
         private async Task<IRestResponse> DoRequestAsync(string query)
         {
-            var client = new RestClient(query);
-            client.Timeout = -1;
-            var request = new RestRequest(Method.GET);
-            request.AddHeader(Enums.ApiEndPoints.XChangeNowHeaderKey, ApiKey);
-            return await client.ExecuteAsync(request);
+            var client = new RestClient(query) { Timeout = -1 };
+            return await client.ExecuteAsync(GetRestRequest(query));
         }
 
         private IRestResponse DoRequest(string query)
         {
-            var client = new RestClient(query);
-            client.Timeout = -1;
+            var client = new RestClient(query) { Timeout = -1 };
+            return client.Execute(GetRestRequest(query));
+        }
+
+        private RestRequest GetRestRequest(string query)
+        {
             var request = new RestRequest(Method.GET);
-            request.AddHeader(Enums.ApiEndPoints.XChangeNowHeaderKey, ApiKey);
-            return client.Execute(request);
+            request.AddHeader(Enums.ApiEndPoints.XChangeNowHeaderKey, _apiKey);
+            return request;
         }
 
         private RestRequest GetCreateRequest(TransactionRequest requestObj)
         {
             var request = new RestRequest(Method.POST);
             request.AddHeader(Enums.ApiEndPoints.ContentType, Enums.ApiEndPoints.ApplicationJson);
-            request.AddHeader(Enums.ApiEndPoints.XChangeNowHeaderKey, ApiKey);
+            request.AddHeader(Enums.ApiEndPoints.XChangeNowHeaderKey, _apiKey);
 
             if (requestObj != null)
             {
