@@ -1,4 +1,5 @@
-﻿using ChangeNowApi_V2.Dto;
+﻿using ChangeNowApi_V2.Consts;
+using ChangeNowApi_V2.Dto;
 using Newtonsoft.Json;
 using RestSharp;
 using System.Collections.Generic;
@@ -89,7 +90,7 @@ namespace ChangeNowApi_V2
 
         public async Task<TransactionResponse> CreateExchangeTransactionAsync(TransactionRequest request)
         {
-            var client = new RestClient(Enums.ApiEndPoints.Exchange);
+            var client = new RestClient(ApiEndPoints.Exchange);
             client.Timeout = -1;
             IRestResponse response = await client.ExecuteAsync(GetCreateRequest(request));
             return CreateExchangeErrorHandle(response);
@@ -97,7 +98,7 @@ namespace ChangeNowApi_V2
 
         public TransactionResponse CreateExchangeTransaction(TransactionRequest request)
         {
-            var client = new RestClient(Enums.ApiEndPoints.Exchange);
+            var client = new RestClient(ApiEndPoints.Exchange);
             client.Timeout = -1;
             return CreateExchangeErrorHandle(client.Execute(GetCreateRequest(request)));
 
@@ -176,11 +177,11 @@ namespace ChangeNowApi_V2
         {
             if (request != null)
             {
-                return $"{Enums.ApiEndPoints.Exchange}estimated-amount?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromAmount={request.FromAmount}&toAmount={request.ToAmount}&fromNetwork={request.FromNetwork}&toNetwork={request.ToNetwork}&flow={request.Flow}&type={request.Type}&useRateId={request.UseRateId}";
+                return $"{ApiEndPoints.Exchange}estimated-amount?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromAmount={request.FromAmount}&toAmount={request.ToAmount}&fromNetwork={request.FromNetwork}&toNetwork={request.ToNetwork}&flow={request.Flow}&type={request.Type}&useRateId={request.UseRateId}";
             }
             else
             {
-                return $"{Enums.ApiEndPoints.Exchange}estimated-amount?fromCurrency=&toCurrency=&fromAmount=&toAmount=&fromNetwork=&toNetwork=&flow=&type=&useRateId=";
+                return $"{ApiEndPoints.Exchange}estimated-amount?fromCurrency=&toCurrency=&fromAmount=&toAmount=&fromNetwork=&toNetwork=&flow=&type=&useRateId=";
             }
 
         }
@@ -200,19 +201,19 @@ namespace ChangeNowApi_V2
         private RestRequest GetRestRequest(string query)
         {
             var request = new RestRequest(Method.GET);
-            request.AddHeader(Enums.ApiEndPoints.XChangeNowHeaderKey, _apiKey);
+            request.AddHeader(ApiEndPoints.XChangeNowHeaderKey, _apiKey);
             return request;
         }
 
         private RestRequest GetCreateRequest(TransactionRequest requestObj)
         {
             var request = new RestRequest(Method.POST);
-            request.AddHeader(Enums.ApiEndPoints.ContentType, Enums.ApiEndPoints.ApplicationJson);
-            request.AddHeader(Enums.ApiEndPoints.XChangeNowHeaderKey, _apiKey);
+            request.AddHeader(ApiEndPoints.ContentType, ApiEndPoints.ApplicationJson);
+            request.AddHeader(ApiEndPoints.XChangeNowHeaderKey, _apiKey);
 
             if (requestObj != null)
             {
-                request.AddParameter(Enums.ApiEndPoints.ApplicationJson,
+                request.AddParameter(ApiEndPoints.ApplicationJson,
                     "{" +
                     $"\n    \"fromCurrency\": \"{requestObj.FromCurrency}\"," +
                     $"\n    \"toCurrency\": \"{requestObj.ToCurrency}\"," +
@@ -236,7 +237,7 @@ namespace ChangeNowApi_V2
             }
             else
             {
-                request.AddParameter(Enums.ApiEndPoints.ApplicationJson,
+                request.AddParameter(ApiEndPoints.ApplicationJson,
                     "{" +
                     $"\n    \"fromCurrency\": \"\"," +
                     $"\n    \"toCurrency\": \"\"," +
@@ -265,11 +266,11 @@ namespace ChangeNowApi_V2
         {
             if (request != null)
             {
-                return $"{Enums.ApiEndPoints.Exchange}by-id?id={request}";
+                return $"{ApiEndPoints.Exchange}by-id?id={request}";
             }
             else
             {
-                return $"{Enums.ApiEndPoints.Exchange}by-id?id=";
+                return $"{ApiEndPoints.Exchange}by-id?id=";
             }
 
         }
@@ -278,11 +279,11 @@ namespace ChangeNowApi_V2
         {
             if (request != null)
             {
-                return $"{Enums.ApiEndPoints.Exchange}currencies?active={request.Active}&flow={request.Flow}&buy={request.Buy}&sell={ request.Sell}";
+                return $"{ApiEndPoints.Exchange}currencies?active={request.Active}&flow={request.Flow}&buy={request.Buy}&sell={ request.Sell}";
             }
             else
             {
-                return $"{Enums.ApiEndPoints.Exchange}currencies?active=&flow=&buy=&sell=";
+                return $"{ApiEndPoints.Exchange}currencies?active=&flow=&buy=&sell=";
             }
 
         }
@@ -291,11 +292,11 @@ namespace ChangeNowApi_V2
         {
             if (request != null)
             {
-                return $"{Enums.ApiEndPoints.Exchange}min-amount?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromNetwork={request.FromNetwork}&toNetwork={request.ToNetwork}&flow={request.Flow}";
+                return $"{ApiEndPoints.Exchange}min-amount?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromNetwork={request.FromNetwork}&toNetwork={request.ToNetwork}&flow={request.Flow}";
             }
             else
             {
-                return $"{Enums.ApiEndPoints.Exchange}min-amount?fromCurrency=&toCurrency=&fromNetwork=&toNetwork=&flow=";
+                return $"{ApiEndPoints.Exchange}min-amount?fromCurrency=&toCurrency=&fromNetwork=&toNetwork=&flow=";
             }
         }
 
@@ -303,11 +304,11 @@ namespace ChangeNowApi_V2
         {
             if (request != null)
             {
-                return $"{Enums.ApiEndPoints.Exchange}range?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromNetwork={request.FromNetwork}&toNetwork={request.ToNetwork}&flow={request.Flow}";
+                return $"{ApiEndPoints.Exchange}range?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromNetwork={request.FromNetwork}&toNetwork={request.ToNetwork}&flow={request.Flow}";
             }
             else
             {
-                return $"{Enums.ApiEndPoints.Exchange}range?fromCurrency=&toCurrency=&fromNetwork=&toNetwork=&flow=";
+                return $"{ApiEndPoints.Exchange}range?fromCurrency=&toCurrency=&fromNetwork=&toNetwork=&flow=";
             }
         }
 
@@ -315,11 +316,11 @@ namespace ChangeNowApi_V2
         {
             if (request != null)
             {
-                return $"{Enums.ApiEndPoints.Validation}address?currency={request.Curreny}&address={request.Adress}";
+                return $"{ApiEndPoints.Validation}address?currency={request.Curreny}&address={request.Adress}";
             }
             else
             {
-                return $"{Enums.ApiEndPoints.Validation}address?currency=&address=";
+                return $"{ApiEndPoints.Validation}address?currency=&address=";
             }
         }
 
@@ -327,11 +328,11 @@ namespace ChangeNowApi_V2
         {
             if (request != null)
             {
-                return $"{Enums.ApiEndPoints.Root}addresses-by-name?name={request.Name}";
+                return $"{ApiEndPoints.Root}addresses-by-name?name={request.Name}";
             }
             else
             {
-                return $"{Enums.ApiEndPoints.Root}addresses-by-name?name=";
+                return $"{ApiEndPoints.Root}addresses-by-name?name=";
             }
         }
 
@@ -339,13 +340,13 @@ namespace ChangeNowApi_V2
         {
             if (request != null)
             {
-                return $"{Enums.ApiEndPoints.Markets}estimate?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromAmount={request.FromAmount}&toAmount&type={request.Type}";
+                return $"{ApiEndPoints.Markets}estimate?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromAmount={request.FromAmount}&toAmount&type={request.Type}";
 
             }
             else
             {
 
-                return $"{Enums.ApiEndPoints.Markets}estimate?fromCurrency=&toCurrency=&fromAmount=&toAmount&type=";
+                return $"{ApiEndPoints.Markets}estimate?fromCurrency=&toCurrency=&fromAmount=&toAmount&type=";
             }
         }
 

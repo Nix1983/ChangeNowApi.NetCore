@@ -6,18 +6,6 @@ namespace ChangeNowApi_V2.Dto
     public class MarketEstimatedResponse : ResponseBase
     {
         /// <summary>
-        /// “From” currency
-        /// </summary>
-        [JsonProperty("fromCurrency")]
-        public string FromCurrency { get; set; }
-
-        /// <summary>
-        /// “To” currency
-        /// </summary>
-        [JsonProperty("toCurrency")]
-        public string ToCurrency { get; set; }
-
-        /// <summary>
         /// The amount of “from” currency
         /// </summary>
         [JsonProperty("fromAmount")]

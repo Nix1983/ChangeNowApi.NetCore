@@ -1,4 +1,4 @@
-﻿namespace ChangeNowApi_V2.Enums
+﻿namespace ChangeNowApi_V2.Consts
 {
     public static class ApiEndPoints
     {
