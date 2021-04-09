@@ -5,7 +5,7 @@
 ## Installation
 Use the nuget package manager to install
 ```bash
-Install-Package ChangeNowApi_V2 -Version 1.0.0
+Install-Package ChangeNowApi_V2 -Version 1.1.0
 ```
 
 ## Usage
@@ -20,15 +20,15 @@ To see how this library is used, I recommend the Unittest Project. Every functio
 var client = ChangeNowClient.GetClient("YOUR API KEY");
 
 //get available currencies
-var request = new CurrencyRequest() { Active = true};
+var request = new CurrencyRequest(true);
 var cur = client.GetListOfAvailableCurrencies(request);
 
 //validate address
-var request = new AddressValidationRequest(){ Curreny = "btc", Address = "31hA6mRWcGihPhiuChqerESdazQJgbbjeb"};
+var request = new AddressValidationRequest("btc","31hA6mRWcGihPhiuChqerESdazQJgbbjeb");
 var isValid = client.ValidateAddress(request);
 
 //create exchange
-var request = new TransactionRequest(){ FromCurrency = "btc", ToCurrency = "eth", Address = "0x6E2876b9d7aa6b877d77643D962F0c3237Bf023f", FromAmount = "0.1" };
+var request = new TransactionRequest("btc", "eth", "0x6E2876b9d7aa6b877d77643D962F0c3237Bf023f", "0.1");
 var response = client.CreateExchangeTransaction(request);
 ```
  All function also can call async
