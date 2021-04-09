@@ -1,6 +1,7 @@
 ﻿using ChangeNowApi_V2.Consts;
 using ChangeNowApi_V2.Converter;
 using ChangeNowApi_V2.Dto;
+using ChangeNowApi_V2.Dto.BaseClasses;
 using Newtonsoft.Json;
 using RestSharp;
 using System.Collections.Generic;
@@ -263,10 +264,7 @@ namespace ChangeNowApi_V2
             }
             else
             {
-                var result = new TransactionResponse();
-                result.StatusCode = response.StatusCode.ToString();
-                result.ErroeMessage = response.Content;
-                return result;
+                return AddErrorMessage(new TransactionResponse(), response) as TransactionResponse;
             }
         }
 
@@ -279,10 +277,7 @@ namespace ChangeNowApi_V2
             else
             {
                 var list = new List<CurrencyResponse>();
-                var result = new CurrencyResponse();
-                result.StatusCode = response.StatusCode.ToString();
-                result.ErroeMessage = response.Content;
-                list.Add(result);
+                list.Add(AddErrorMessage(new CurrencyResponse(), response) as CurrencyResponse);
                 return list;
             }
         }
@@ -295,10 +290,7 @@ namespace ChangeNowApi_V2
             }
             else
             {
-                var result = new MinimalExchangeResponse();
-                result.StatusCode = response.StatusCode.ToString();
-                result.ErroeMessage = response.Content;
-                return result;
+                return AddErrorMessage(new MinimalExchangeResponse(), response) as MinimalExchangeResponse;
             }
         }
 
@@ -310,10 +302,7 @@ namespace ChangeNowApi_V2
             }
             else
             {
-                var result = new ExchangeRangeResponse();
-                result.StatusCode = response.StatusCode.ToString();
-                result.ErroeMessage = response.Content;
-                return result;
+                return AddErrorMessage(new ExchangeRangeResponse(), response) as ExchangeRangeResponse;
             }
         }
 
@@ -325,10 +314,7 @@ namespace ChangeNowApi_V2
             }
             else
             {
-                var result = new EstimatedExchangeAmountResponse();
-                result.StatusCode = response.StatusCode.ToString();
-                result.ErroeMessage = response.Content;
-                return result;
+                return AddErrorMessage(new EstimatedExchangeAmountResponse(), response) as EstimatedExchangeAmountResponse;
             }
         }
 
@@ -340,10 +326,7 @@ namespace ChangeNowApi_V2
             }
             else
             {
-                var result = new TransactionStatusResponse();
-                result.StatusCode = response.StatusCode.ToString();
-                result.ErroeMessage = response.Content;
-                return result;
+                return AddErrorMessage(new TransactionStatusResponse(), response) as TransactionStatusResponse;
             }
         }
 
@@ -355,10 +338,7 @@ namespace ChangeNowApi_V2
             }
             else
             {
-                var result = new AddressValitationResponse();
-                result.StatusCode = response.StatusCode.ToString();
-                result.ErroeMessage = response.Content;
-                return result;
+                return AddErrorMessage(new AddressValitationResponse(), response) as AddressValitationResponse;
             }
         }
 
@@ -370,10 +350,7 @@ namespace ChangeNowApi_V2
             }
             else
             {
-                var result = new FioAddressesResponse();
-                result.StatusCode = response.StatusCode.ToString();
-                result.ErroeMessage = response.Content;
-                return result;
+                return AddErrorMessage(new FioAddressesResponse(), response) as FioAddressesResponse;
             }
         }
 
@@ -385,11 +362,16 @@ namespace ChangeNowApi_V2
             }
             else
             {
-                var result = new MarketEstimatedResponse();
-                result.StatusCode = response.StatusCode.ToString();
-                result.ErroeMessage = response.Content;
-                return result;
+
+                return AddErrorMessage(new MarketEstimatedResponse(), response) as MarketEstimatedResponse;
             }
+        }
+
+        private ResponseBase AddErrorMessage(ResponseBase result, IRestResponse response)
+        {
+            result.StatusCode = response.StatusCode.ToString();
+            result.ErroeMessage = response.Content;
+            return result;
         }
 
         #endregion
