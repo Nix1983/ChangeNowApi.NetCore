@@ -1,3 +1,4 @@
+<img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/Nix1983/ChangeNowApi.NetCore/CodeQL">   <img alt="Nuget" src="https://img.shields.io/nuget/v/ChangeNowApi_V2">   <img alt="GitHub" src="https://img.shields.io/github/license/Nix1983/ChangeNowApi.NetCore">
 # ChangeNowApi.NetCore 
 
 .Net Core library for accessing the [ChangeNow V2 Api](https://changenow.io/api/docs) for C#/NET.
