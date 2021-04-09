@@ -16,8 +16,8 @@
     <PackageProjectUrl>https://github.com/Nix1983/ChangeNowApi.NetCore</PackageProjectUrl>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
-    <PackageReleaseNotes>Make client to singleton.  Some spell changes</PackageReleaseNotes>
-    <Version>1.0.1</Version>
+    <PackageReleaseNotes>Better, faster and cleaner code. Address validation now work for all available currency in enum</PackageReleaseNotes>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
