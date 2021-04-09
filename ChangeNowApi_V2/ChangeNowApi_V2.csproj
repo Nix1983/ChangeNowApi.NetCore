@@ -6,7 +6,7 @@
     <Authors>Nix</Authors>
     <Company>Nix</Company>
     <PackageTags>bitcoin, ethereum, litecoin, coinbase, api, cryptocurrency, payment, money, merchant, checkout, cart, gateway, bank, swap</PackageTags>
-    <Description>Cleaner Code</Description>
+    <Description>A .NET implementation for the ChangeNow API for swapping coins. The ChangeNow API is a way to simple swap crypto coins fast and cheap</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -16,8 +16,8 @@
     <PackageProjectUrl>https://github.com/Nix1983/ChangeNowApi.NetCore</PackageProjectUrl>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
-    <PackageReleaseNotes>Better, faster and cleaner code. Address validation now work for all available currency in enum</PackageReleaseNotes>
-    <Version>1.1.1</Version>
+    <PackageReleaseNotes>Cleaner Code</PackageReleaseNotes>
+    <Version>1.1.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
