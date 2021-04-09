@@ -1,5 +1,8 @@
-﻿using ChangeNowApi_V2.Dto.BaseClasses;
+﻿using ChangeNowApi_V2.Converter;
+using ChangeNowApi_V2.Dto.BaseClasses;
+using ChangeNowApi_V2.Enums;
 using Newtonsoft.Json;
+using System;
 
 namespace ChangeNowApi_V2.Dto
 {
@@ -15,8 +18,9 @@ namespace ChangeNowApi_V2.Dto
         /// Transaction status:
         /// </summary>
         [JsonProperty("status")]
-        public string Status { get; set; }
-       
+        [JsonConverter(typeof(TransactionStatusEnumJsonConverter))]
+        public TransactionStatusEnum Status { get; set; }
+
         /// <summary>
         /// Indicates if an exchange can be pushed or refunded using Public push & refund endpoints.
         /// </summary>
@@ -54,7 +58,7 @@ namespace ChangeNowApi_V2.Dto
         public string PayinAddress { get; set; }
 
         /// <summary>
-        /// The wallet address that will recieve the exchanged funds.
+        /// The wallet address that will receive the exchanged funds.
         /// Should the same how in property address in TransactionRequest and must be valid
         /// </summary>
         [JsonProperty("payoutAddress")]
@@ -88,29 +92,32 @@ namespace ChangeNowApi_V2.Dto
         /// Transaction creation date and time
         /// </summary>
         [JsonProperty("createdAt")]
-        public string CreatedAt { get; set; }
+        [JsonConverter(typeof(DateTimeJsonConverter))]
+        public DateTime CreatedAt { get; set; }
 
         /// <summary>
         /// Date and time of the last transaction update (e.g. status update)
         /// </summary>
         [JsonProperty("updatedAt")]
-        public string UpdatedAt { get; set; }
+        [JsonConverter(typeof(DateTimeJsonConverter))]
+        public DateTime UpdatedAt { get; set; }
 
         /// <summary>
         /// Deposit receiving date and time
         /// </summary>
         [JsonProperty("depositReceivedAt")]
-        public string DepositReceivedAt { get; set; }
+        [JsonConverter(typeof(DateTimeJsonConverter))]
+        public DateTime DepositReceivedAt { get; set; }
 
         /// <summary>
-        /// Transaction hash in the blockchain of the currency 
+        /// Transaction hash in the block chain of the currency 
         /// which you specified in the fromCurrency field that you send when creating the transaction
         /// </summary>
         [JsonProperty("payinHash")]
         public string PayinHash { get; set; }
 
         /// <summary>
-        /// Transaction hash in the blockchain of the currency 
+        /// Transaction hash in the block chain of the currency 
         /// which you specified in the toCurrency field. We generate it when creating a transaction
         /// </summary>
         [JsonProperty("payoutHash")]

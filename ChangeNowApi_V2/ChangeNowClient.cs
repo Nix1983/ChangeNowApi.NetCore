@@ -1,8 +1,10 @@
 ﻿using ChangeNowApi_V2.Consts;
+using ChangeNowApi_V2.Converter;
 using ChangeNowApi_V2.Dto;
 using Newtonsoft.Json;
 using RestSharp;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -106,21 +108,11 @@ namespace ChangeNowApi_V2
 
         public TransactionStatusResponse GetTransactionStatus(TransactionStatusRequest request)
         {
-            if (request == null)
-            {
-                request = new TransactionStatusRequest();
-            }
-
             return TransactionStatusResponseErrorHandle(DoRequest(GetTransactionStatusQueryString(request.Id)));
         }
 
         public async Task<TransactionStatusResponse> GetTransactionStatusAsync(TransactionStatusRequest request)
         {
-            if (request == null)
-            {
-                request = new TransactionStatusRequest();
-            }
-
             IRestResponse response = await DoRequestAsync(GetTransactionStatusQueryString(request.Id));
             return TransactionStatusResponseErrorHandle(response);
         }
@@ -175,30 +167,22 @@ namespace ChangeNowApi_V2
 
         private string GetGetEstimatedExchangeAmountQueryString(EstimatedExchangeAmountRequest request)
         {
-            if (request != null)
-            {
-                return $"{ApiEndPoints.Exchange}estimated-amount?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromAmount={request.FromAmount}&toAmount={request.ToAmount}&fromNetwork={request.FromNetwork}&toNetwork={request.ToNetwork}&flow={request.Flow}&type={request.Type}&useRateId={request.UseRateId}";
-            }
-            else
-            {
-                return $"{ApiEndPoints.Exchange}estimated-amount?fromCurrency=&toCurrency=&fromAmount=&toAmount=&fromNetwork=&toNetwork=&flow=&type=&useRateId=";
-            }
-
+            return $"{ApiEndPoints.Exchange}estimated-amount?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromAmount={request.FromAmount.ToString(CultureInfo.InvariantCulture)}&toAmount={request.ToAmount.ToString(CultureInfo.InvariantCulture)}&fromNetwork={request.FromNetwork}&toNetwork={request.ToNetwork}&flow={FlowEnumConverter.ToString(request.Flow)}&type={DirectionEnumConverter.ToString(request.Type)}&useRateId={request.UseRateId}";
         }
 
         private async Task<IRestResponse> DoRequestAsync(string query)
         {
             var client = new RestClient(query) { Timeout = -1 };
-            return await client.ExecuteAsync(GetRestRequest(query));
+            return await client.ExecuteAsync(GetRestRequest());
         }
 
         private IRestResponse DoRequest(string query)
         {
             var client = new RestClient(query) { Timeout = -1 };
-            return client.Execute(GetRestRequest(query));
+            return client.Execute(GetRestRequest());
         }
 
-        private RestRequest GetRestRequest(string query)
+        private RestRequest GetRestRequest()
         {
             var request = new RestRequest(Method.GET);
             request.AddHeader(ApiEndPoints.XChangeNowHeaderKey, _apiKey);
@@ -211,143 +195,64 @@ namespace ChangeNowApi_V2
             request.AddHeader(ApiEndPoints.ContentType, ApiEndPoints.ApplicationJson);
             request.AddHeader(ApiEndPoints.XChangeNowHeaderKey, _apiKey);
 
-            if (requestObj != null)
-            {
-                request.AddParameter(ApiEndPoints.ApplicationJson,
-                    "{" +
-                    $"\n    \"fromCurrency\": \"{requestObj.FromCurrency}\"," +
-                    $"\n    \"toCurrency\": \"{requestObj.ToCurrency}\"," +
-                    $"\n    \"fromNetwork\": \"{requestObj.FromNetwork}\"," +
-                    $"\n    \"toNetwork\": \"{requestObj.ToNetwork}\"," +
-                    $"\n    \"fromAmount\": \"{requestObj.FromAmount}\"," +
-                    $"\n    \"toAmount\": \"{requestObj.ToAmount}\"," +
-                    $"\n    \"address\": \"{requestObj.Address}\"," +
-                    $"\n    \"extraId\": \"{requestObj.ExtraId}\"," +
-                    $"\n    \"refundAddress\": \"{requestObj.RefundAddress}\"," +
-                    $"\n    \"refundExtraId\": \"{requestObj.RefundExtraId}\"," +
-                    $"\n    \"userId\": \"{requestObj.UserId}\"," +
-                    $"\n    \"payload\": \"{requestObj.Payload}\"," +
-                    $"\n    \"contactEmail\": \"{requestObj.ConactEmail}\"," +
-                    $"\n    \"source\": \"\"," +
-                    $"\n    \"flow\": \"{requestObj.Flow}\"," +
-                    $"\n    \"type\": \"{requestObj.Type}\"," +
-                    $"\n    \"rateId\": \"{requestObj.RateID}\"" +
-                    $"\n" +
-                    "}", ParameterType.RequestBody);
-            }
-            else
-            {
-                request.AddParameter(ApiEndPoints.ApplicationJson,
-                    "{" +
-                    $"\n    \"fromCurrency\": \"\"," +
-                    $"\n    \"toCurrency\": \"\"," +
-                    $"\n    \"fromNetwork\": \"\"," +
-                    $"\n    \"toNetwork\": \"\"," +
-                    $"\n    \"fromAmount\": \"\"," +
-                    $"\n    \"toAmount\": \"\"," +
-                    $"\n    \"address\": \"\"," +
-                    $"\n    \"extraId\": \"\"," +
-                    $"\n    \"refundAddress\": \"\"," +
-                    $"\n    \"refundExtraId\": \"\"," +
-                    $"\n    \"userId\": \"\"," +
-                    $"\n    \"payload\": \"\"," +
-                    $"\n    \"contactEmail\": \"\"," +
-                    $"\n    \"source\": \"\"," +
-                    $"\n    \"flow\": \"\"," +
-                    $"\n    \"type\": \"\"," +
-                    $"\n    \"rateId\": \"\"" +
-                    $"\n" +
-                    "}", ParameterType.RequestBody);
-            }
+            request.AddParameter(ApiEndPoints.ApplicationJson,
+                "{" +
+                $"\n    \"fromCurrency\": \"{requestObj.FromCurrency}\"," +
+                $"\n    \"toCurrency\": \"{requestObj.ToCurrency}\"," +
+                $"\n    \"fromNetwork\": \"{requestObj.FromNetwork}\"," +
+                $"\n    \"toNetwork\": \"{requestObj.ToNetwork}\"," +
+                $"\n    \"fromAmount\": \"{requestObj.FromAmount.ToString(CultureInfo.InvariantCulture)}\"," +
+                $"\n    \"toAmount\": \"{requestObj.ToAmount.ToString(CultureInfo.InvariantCulture)}\"," +
+                $"\n    \"address\": \"{requestObj.Address}\"," +
+                $"\n    \"extraId\": \"{requestObj.ExtraId}\"," +
+                $"\n    \"refundAddress\": \"{requestObj.RefundAddress}\"," +
+                $"\n    \"refundExtraId\": \"{requestObj.RefundExtraId}\"," +
+                $"\n    \"userId\": \"{requestObj.UserId}\"," +
+                $"\n    \"payload\": \"{requestObj.PayLoad}\"," +
+                $"\n    \"contactEmail\": \"{requestObj.ConactEmail}\"," +
+                $"\n    \"source\": \"\"," +
+                $"\n    \"flow\": \"{FlowEnumConverter.ToString(requestObj.Flow)}\"," +
+                $"\n    \"type\": \"{DirectionEnumConverter.ToString(requestObj.Type)}\"," +
+                $"\n    \"rateId\": \"{requestObj.RateID}\"" +
+                $"\n" +
+                "}", ParameterType.RequestBody);
+
             return request;
         }
 
         private string GetTransactionStatusQueryString(string request)
         {
-            if (request != null)
-            {
-                return $"{ApiEndPoints.Exchange}by-id?id={request}";
-            }
-            else
-            {
-                return $"{ApiEndPoints.Exchange}by-id?id=";
-            }
-
+            return $"{ApiEndPoints.Exchange}by-id?id={request}";
         }
 
         private string GetAvailableCurrencyQueryString(CurrencyRequest request)
         {
-            if (request != null)
-            {
-                return $"{ApiEndPoints.Exchange}currencies?active={request.Active}&flow={request.Flow}&buy={request.Buy}&sell={ request.Sell}";
-            }
-            else
-            {
-                return $"{ApiEndPoints.Exchange}currencies?active=&flow=&buy=&sell=";
-            }
-
+            return $"{ApiEndPoints.Exchange}currencies?active={request.Active}&flow={FlowEnumConverter.ToString(request.Flow)}&buy={request.Buy}&sell={ request.Sell}";
         }
 
         private string GetMinimalExchangeAmountQueryString(MinimalExchangeRequest request)
         {
-            if (request != null)
-            {
-                return $"{ApiEndPoints.Exchange}min-amount?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromNetwork={request.FromNetwork}&toNetwork={request.ToNetwork}&flow={request.Flow}";
-            }
-            else
-            {
-                return $"{ApiEndPoints.Exchange}min-amount?fromCurrency=&toCurrency=&fromNetwork=&toNetwork=&flow=";
-            }
+            return $"{ApiEndPoints.Exchange}min-amount?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromNetwork={request.FromNetwork}&toNetwork={request.ToNetwork}&flow={FlowEnumConverter.ToString(request.Flow)}";
         }
 
         private string GetExchangeRangeQueryString(ExchangeRangeRequest request)
         {
-            if (request != null)
-            {
-                return $"{ApiEndPoints.Exchange}range?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromNetwork={request.FromNetwork}&toNetwork={request.ToNetwork}&flow={request.Flow}";
-            }
-            else
-            {
-                return $"{ApiEndPoints.Exchange}range?fromCurrency=&toCurrency=&fromNetwork=&toNetwork=&flow=";
-            }
+            return $"{ApiEndPoints.Exchange}range?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromNetwork={request.FromNetwork}&toNetwork={request.ToNetwork}&flow={FlowEnumConverter.ToString(request.Flow)}";
         }
 
         private string GetAddressValidationQueryString(AddressValidationRequest request)
         {
-            if (request != null)
-            {
-                return $"{ApiEndPoints.Validation}address?currency={request.Curreny}&address={request.Adress}";
-            }
-            else
-            {
-                return $"{ApiEndPoints.Validation}address?currency=&address=";
-            }
+            return $"{ApiEndPoints.Validation}address?currency={request.Currency}&address={request.Address}";
         }
 
         private string GetFioAddressesQueryString(FioAddressesRequest request)
         {
-            if (request != null)
-            {
-                return $"{ApiEndPoints.Root}addresses-by-name?name={request.Name}";
-            }
-            else
-            {
-                return $"{ApiEndPoints.Root}addresses-by-name?name=";
-            }
+            return $"{ApiEndPoints.Root}addresses-by-name?name={request.Name}";
         }
 
         private string GetMarketEstimatedQueryString(MarketEstimatedRequest request)
         {
-            if (request != null)
-            {
-                return $"{ApiEndPoints.Markets}estimate?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromAmount={request.FromAmount}&toAmount&type={request.Type}";
-
-            }
-            else
-            {
-
-                return $"{ApiEndPoints.Markets}estimate?fromCurrency=&toCurrency=&fromAmount=&toAmount&type=";
-            }
+            return $"{ApiEndPoints.Markets}estimate?fromCurrency={request.FromCurrency}&toCurrency={request.ToCurrency}&fromAmount={request.FromAmount.ToString(CultureInfo.InvariantCulture)}&toAmount&type={DirectionEnumConverter.ToString(request.Type)}";
         }
 
         private TransactionResponse CreateExchangeErrorHandle(IRestResponse response)

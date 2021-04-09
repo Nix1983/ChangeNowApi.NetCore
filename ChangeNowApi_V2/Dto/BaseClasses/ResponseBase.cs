@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using ChangeNowApi_V2.Converter;
+using ChangeNowApi_V2.Enums;
+using Newtonsoft.Json;
 
 namespace ChangeNowApi_V2.Dto.BaseClasses
 {
@@ -29,10 +31,11 @@ namespace ChangeNowApi_V2.Dto.BaseClasses
         public string ToNetwork { get; set; }
 
         /// <summary>
-        /// Type of exchange flow. Enum: ["standard", "fixed-rate"]
+        /// Type of exchange flow.
         /// </summary>
         [JsonProperty("flow")]
-        public string Flow { get; set; }
+        [JsonConverter(typeof(FlowEnumJsonConverter))]
+        public FlowEnum Flow { get; set; }
 
         /// <summary>
         /// Response status code

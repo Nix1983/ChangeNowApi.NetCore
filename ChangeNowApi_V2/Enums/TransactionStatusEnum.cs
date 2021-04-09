@@ -1,6 +1,6 @@
 ﻿namespace ChangeNowApi_V2.Enums
 {
-    public enum TransactionStatus
+    public enum TransactionStatusEnum
     {
         New,
         Waiting,

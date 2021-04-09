@@ -15,7 +15,7 @@ namespace ChangeNowApi_V2.Dto
         /// Array of addresses for requested fio-address
         /// </summary>
         [JsonProperty("addresses")]
-        public string [] Addresses { get; set; }
+        public string[] Addresses { get; set; }
 
         /// <summary>
         /// Currency ticker in naming space of his protocol

@@ -5,6 +5,11 @@
         /// <summary>
         /// (Required) FIO address
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; }
+
+        public FioAddressesRequest(string name)
+        {
+            Name = name;
+        }
     }
 }

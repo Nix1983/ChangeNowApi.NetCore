@@ -5,6 +5,11 @@
         /// <summary>
         /// (Required) Transaction ID from Create transaction request
         /// </summary>
-        public string Id { get; set; }
+        public string Id { get; }
+
+        public TransactionStatusRequest(string id)
+        {
+            Id = id;
+        }
     }
 }

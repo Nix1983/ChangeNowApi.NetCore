@@ -5,7 +5,7 @@ namespace ChangeNowApi_V2.Dto
 {
     public class ExchangeRangeResponse : ResponseBase
     {
-   
+
         /// <summary>
         /// Minimal payment amount
         /// </summary>

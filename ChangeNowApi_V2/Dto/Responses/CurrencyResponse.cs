@@ -27,31 +27,31 @@ namespace ChangeNowApi_V2.Dto
         /// Indicates if a currency has an Extra ID
         /// </summary>
         [JsonProperty("hasExternalId")]
-        public bool? HasExternalId { get; set; }
+        public bool HasExternalId { get; set; }
 
         /// <summary>
         /// Indicates if a currency is a fiat currency (EUR, USD)
         /// </summary>
         [JsonProperty("isFiat")]
-        public bool? IsFiat { get; set; }
+        public bool IsFiat { get; set; }
 
         /// <summary>
         /// Indicates if a currency is popular
         /// </summary>
         [JsonProperty("featured")]
-        public bool? Featured { get; set; }
+        public bool Featured { get; set; }
 
         /// <summary>
         /// Indicates if a currency is stable
         /// </summary>
         [JsonProperty("isStable")]
-        public bool? IsStable { get; set; }
+        public bool IsStable { get; set; }
 
         /// <summary>
         /// Indicates if a currency is available on a fixed-rate flow
         /// </summary>
         [JsonProperty("supportsFixedRate")]
-        public bool? SupportedFixedRate { get; set; }
+        public bool SupportedFixedRate { get; set; }
 
         /// <summary>
         /// Currency network

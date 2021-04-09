@@ -1,4 +1,6 @@
-﻿using ChangeNowApi_V2.Dto.BaseClasses;
+﻿using ChangeNowApi_V2.Converter;
+using ChangeNowApi_V2.Dto.BaseClasses;
+using ChangeNowApi_V2.Enums;
 using Newtonsoft.Json;
 
 namespace ChangeNowApi_V2.Dto
@@ -10,10 +12,11 @@ namespace ChangeNowApi_V2.Dto
         /// Use "reverse" value to set amount for currencyTo and get amount of currencyFrom. Default is direct
         /// </summary>
         [JsonProperty("type")]
-        public string Type { get; set; } = Enums.Direction.Direct;
+        [JsonConverter(typeof(DirectionEnumJsonConverter))]
+        public DirectionEnum Type { get; set; }
 
         /// <summary>
-        /// RateId is needed for fixed-rate flow. If you set param "useRateId" to true,
+        /// RateId is needed for fixed-rate flow. If you set para "useRateId" to true,
         /// you could use returned field "rateId" in next method for creating transaction to freeze estimated amount that you got in this method. 
         /// Current estimated amount would be valid until time in field "validUntil"
         /// </summary>
@@ -21,8 +24,8 @@ namespace ChangeNowApi_V2.Dto
         public string RateId { get; set; }
 
         /// <summary>
-        /// Date and time before estimated amount would be freezed in case of using rateId. 
-        /// If you set param "useRateId" to true, you could use returned field "rateId" in next method for creating transaction to freeze estimated amount that you got in this method. 
+        /// Date and time before estimated amount would be friezed in case of using rateId. 
+        /// If you set para "useRateId" to true, you could use returned field "rateId" in next method for creating transaction to freeze estimated amount that you got in this method. 
         /// Estimated amount would be valid until this date and time
         /// </summary>
         [JsonProperty("validUntil")]
